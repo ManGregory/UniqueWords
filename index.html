@@ -47,21 +47,20 @@
 
         function makeUnique() {
             var text = document.getElementById("text").value;
-            calculate(text.split(' '));
+            calculate(text.split(/(?:,| )+/));
             console.log(words);
+            var newText = "";
             for (var i = 0; i < words.length; i++) {
-                if (counts[i] > 1) {
-                    var word = words[i];
-                    for (var j = 0; j < counts[i] - 1; j++) {
-                        text = text.replace(word + " ", "");
-                    }
+                var word = words[i];
+                if (word != "" || word != " ") {
+                    newText += word + ", ";
                 }
             }
-            document.getElementById("text").value = text;
+            document.getElementById("text").value = newText.slice(0, -2);
         }
     </script>
     <p>
-        <textarea id="text" rows="30" cols="80">Sample text text here</textarea>
+        <textarea id="text" rows="30" cols="80">furniture, chair, dog, pet, armchair, sofa, isolated, interior, white, seat, design, comfortable, couch, home,  room, relax, illustration, sit,  style, object, cartoon, decor, funny, relaxing, character, indoor, sitting, pets, doggy, colorful, leisure, domestic, puppy, cute, illustration, apartment, cozy, friendly, trendy, pet, animal, pillows, style, dog, hotel, furnitures, living room, home decor, furniture, house, interior, chair, home, cartoon, relaxation, comfortable, lifestyle, living, design, rest, flat, sofa</textarea>
     </p>
     <p><input id="highlight" type="button" value="Make unique" onclick="makeUnique()"></input>
     </p>

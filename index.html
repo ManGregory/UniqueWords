@@ -1,0 +1,70 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Highlight non unique</title>
+    <meta name="description" content="The HTML5 Herald">
+    <meta name="author" content="SitePoint">
+
+    <style>
+        textarea {
+            margin: 0;
+            border-radius: 0;
+        }
+        
+        textarea {
+            color: #444;
+            /* or whatever */
+            background-color: transparent;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        var words = [];
+        var counts = [];
+
+        function calculate(result) {
+            for (var i = 0; i < result.length; i++) {
+                var check = 0;
+                for (var j = 0; j < words.length; j++) {
+                    if (result[i] == words[j]) {
+                        check = 1;
+                        ++counts[j];
+                    }
+                }
+                if (check == 0) {
+                    words.push(result[i]);
+                    counts.push(1);
+                }
+                check = 0;
+            }
+        }
+
+        function makeUnique() {
+            var text = document.getElementById("text").value;
+            calculate(text.split(' '));
+            console.log(words);
+            for (var i = 0; i < words.length; i++) {
+                if (counts[i] > 1) {
+                    var word = words[i];
+                    for (var j = 0; j < counts[i] - 1; j++) {
+                        text = text.replace(word + " ", "");
+                    }
+                }
+            }
+            document.getElementById("text").value = text;
+        }
+    </script>
+    <p>
+        <textarea id="text" rows="30" cols="80">Sample text text here</textarea>
+    </p>
+    <p><input id="highlight" type="button" value="Make unique" onclick="makeUnique()"></input>
+    </p>
+</body>
+
+</html>
